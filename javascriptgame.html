@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+	<canvas id="myCanvas" width="500" height="400" style="border:1px solid #000000;"></canvas> 
+
+	<img id="tile000" src="Guy/tile000.png" style="display: none;" />
+	<img id="tile009_left" src="Guy/tile009.png" style="display: none;" />
+	<img id="tile003_right" src="Guy/tile003.png" style="display: none;" />
+	<img id="tile007_up" src="Guy/tile007.png" style="display: none;" />
+	<img id="tile008_down" src="Guy/tile008.png" style="display: none;" />
+
+	<script>
+		var canvas = document.getElementById("myCanvas");
+		var ctx = canvas.getContext("2d");
+		//var img = document.getElementById("scream");
+
+		document.onkeydown = checkKey;
+
+		var _top = 100;
+		var _left = 100;
+		var _px = 10;
+
+		draw("tile000");
+
+		function checkKey(e) {
+			e = e || window.event;
+
+			clear();
+
+			var imageID = "tile000";
+
+			if (e.keyCode == '38') {
+				// up arrow
+				_top = _top - _px;
+
+				if (_top < 0)
+					_top = 0;
+
+				imageID = "tile007_up";
+			}
+			else if (e.keyCode == '40') {
+				// down arrow
+				_top = _top + _px;
+
+				if (_top > canvas.height - 50)
+					_top = canvas.height - 50;
+
+				imageID = "tile008_down";
+			}
+			else if (e.keyCode == '37') {
+				// left arrow
+				_left = _left - _px;
+
+				if (_left < 0)
+					_left = 0;
+
+				imageID = "tile009_left";
+			}
+			else if (e.keyCode == '39') {
+				// right arrow
+				_left = _left + _px;
+
+				if (_left > canvas.width - 50)
+					_left = canvas.width - 50;
+
+				imageID = "tile003_right";
+			}
+
+			draw(imageID);
+		}
+
+		function clear()
+		{
+			ctx.fillStyle = "#ffffff";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+		}
+
+		function draw(imageID)
+		{
+			var img = document.getElementById(imageID);
+			ctx.drawImage(img, _left, _top, 80, 80);
+		}
+	</script>
+</body>
+</html>
