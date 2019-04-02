@@ -6,20 +6,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
     body {margin:0;}
-
         
-     .signin {
+     #signin {
             color: aqua;
             background-color: grey;
             padding: 5px;
-            length: 200px;
+            
         }
     .icon-bar {
       width: 100%;
       background-color: #555;
       overflow: auto;
     }
-
     .icon-bar a {
       float: left;
       width: 20%;
@@ -29,11 +27,9 @@
       color: white;
       font-size: 36px;
     }
-
     .icon-bar a:hover {
       background-color: #000;
     }
-
     .active {
       background-color: #4CAF50;
     }
@@ -70,15 +66,15 @@
                 mydiv = document.getElementById("mydata");
                 mydiv.innerHTML = name
                 myphotodiv = document.getElementById("myphoto");
-                myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
-
-                firebase.database().ref('/').once('value').then(function(snapshot) {
+                myphotodiv.innerHTML = "<img src='" + imageUrl + "'id = "/>";
+                firebase.database().ref('/tweets/' + userId).once('value').then(function(snapshot) {
                     var data = (snapshot.val());
                     if (data == null) {
-                      console.log("No data found at /tweets");  
+                        
+                      console.log("No data found at /tweets"+ userId);  
                     } else {
                       /*
-                      console.log(data); 
+                      console.log(data);
                       var mylist = "<ul>";
                       for (var u in data) {
                          console.log(data[u]);
@@ -110,11 +106,13 @@
         function updatetweets(data) {
             console.log(data); 
             var mylist = "<ul>";
+            var D = new Date(data[u].time);
+            var t = d.toString()
             for (var u in data.tweets) {
                 console.log(data[u]);
                 for (var t in data.tweets[u]) {
                     console.log(data.tweets[u][t].tweet);
-                    mylist = mylist + "<li>" + data.tweets[u][t].tweet + " (" + data.users[u].email + ")</li>";
+                    mylist = mylist + "<li>" + data.tweets[u][t].tweet + ""(" + t + ") (" + data.users[u].email + ")</li>";
                 } 
             }
             mylist = mylist + "</ul>";
@@ -128,7 +126,8 @@
             
             twitdoc = document.getElementById("twit");
             var nameValue = twitdoc.value;
-            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue});
+            var js_time = Date.now();
+            var tweetid = firebase.database().ref('tweets/' + userId + "/").push({tweet: nameValue, time: js_time});
             twitdoc.value = "";
             console.log("tweet written")
             
@@ -161,7 +160,7 @@
     
     </script>
 
-    <body>
+    <body id ="signin">
             <div class="icon-bar">
       <a class="active" href="#"><i class="fa fa-home"></i></a> 
       <a href="#"><i class="fa fa-search"></i></a> 
@@ -176,7 +175,7 @@
             Tweet:<br>
             <textarea id="twit" type="text" name="thetweet" cols="100" rows="4"></textarea>
         </form> 
-        <button type="button" onclick="tweet()">Submit</button>
+        <button id = "signin" type="button" onclick="tweet()">Submit</button>
     
     <div id="mytweets"></div>
     <div id="mydata"></div>
@@ -185,8 +184,3 @@
 
     
 </html>
-
-
-
-
-
