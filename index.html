@@ -1,5 +1,7 @@
 <html>
-
+    <p>Canvas to fill:</p>
+        <canvas id="myCanvas" width="250" height="300">
+        Your browser does not support the HTML5 canvas tag.</canvas>
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
@@ -93,21 +95,20 @@
         }
         
         function updatetweets(data) {
-            //var mylist = "<ul>";
-            var mytab = "<table>";
+            var mylist = "<ul>";
             users = data[1]; // put on top, because changed data - not good coding change later
             data = data[0];
             
             for (var u in data) {
                 for (var t in data[u]) {
-                    mytab = mytab + "<tr>";
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
-                        mytab = mytab + "<td>" + users[u].email + "</td>";
-                        mytab = mytab + "<td>" + data[u][t].tweet + "</td>";
-                        mytab = mytab + "<td>" + time + "<br><img src='" + data[u][t].img + "' width='300px'></td>";
+                        var uimg = data[u][t].img;
+                        var c = document.getElementById("myCanvas");
+                        var ctx = c.getContext("2d");
+                        var img = "'" + data[u][t].img + "'"
+                        ctx.drawImage(img,10,10);
                     } else {
                         mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
                         mytab = mytab + "<td>" + users[u].email + "</td>";
