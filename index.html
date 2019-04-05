@@ -42,7 +42,6 @@
                 mydiv.innerHTML = name
                 myphotodiv = document.getElementById("myphoto");
                 myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
-
                 firebase.database().ref('/tweets').once('value').then(function(snapshot) {
                     var data = (snapshot.val());
                     if (data == null) {
@@ -65,7 +64,6 @@
         }); // end check auth state
         
         function encodeImageFileAsURL() {
-
             var filesSelected = document.getElementById("inputFileToLoad").files;
             if (filesSelected.length > 0) {
                 var fileToLoad = filesSelected[0];
@@ -100,25 +98,25 @@
             
             for (var u in data) {
                 for (var t in data[u]) {
-                    mytab = mytab + "<center>" + "<tr>";
+                    mytab = mytab + "<tr>";
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</td>";
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</tr>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td><img src='" + data[u][t].img + "' width='300px'></td>";
+                        mytab = mytab + "<td><img src='" + data[u][t].img + "' width='300px'></tr>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td>" + data[u][t].tweet"</td>";
+                        mytab = mytab + "<td>" + data[u][t].tweet + time + "</tr>";
                     } else {
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</td>";
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</tr>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='300px'></td>";
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='300px'></tr>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td id ="timetable">" + data[u][t].tweet"</td>";
+                        mytab = mytab + "<td>" + data[u][t].tweet + time + "</tr>";
                         
                         
                     } 
-                    mytab = mytab + "</td>" + "</center>";
+                    mytab = mytab + "</td>";
                 }   
             }
             //mylist = mylist + "</ul>";
@@ -176,7 +174,6 @@
             });
         }
         
-
     
     </script>
 
@@ -201,8 +198,3 @@
         
         
     </body>
-
-    
-
-    
-</html>
