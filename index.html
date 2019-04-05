@@ -104,15 +104,13 @@
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<tr><img src='" + users[u].profile_picture + "' width='50px'></td>";
-                        mytab = mytab + "<tr>" + users[u].email + "</td>";
-                        mytab = mytab + "<tr>" + data[u][t].tweet + "</td>";
-                        mytab = mytab + "<tr>" + time + "<br><img src='" + data[u][t].img + "' width='300px'></td>";
+                        mytab = mytab + "<tr><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</tr>";
+                        mytab = mytab + "<tr><img src='" + data[u][t].img + "' width='300px'></tr>";
+                        mytab = mytab + "<tr>" + data[u][t].tweet + time + "</tr>";
                     } else {
-                        mytab = mytab + "<tr><img src='" + users[u].profile_picture + "' width='50px'></td>";
-                        mytab = mytab + "<tr>" + users[u].email + "</td>";
-                        mytab = mytab + "<tr>" + data[u][t].tweet + "</td>";
-                        mytab = mytab + "<tr>" + time + "</td>";
+                        mytab = mytab + "<tr><img src='" + users[u].profile_picture + "' width='20px'>" +users[u].email + "</tr>";
+                        mytab = mytab + "<tr><img src='" + users[u].profile_picture + "' width='300px'></tr>";
+                        mytab = mytab + "<tr>" + data[u][t].tweet + time + "</tr>";
                         
                         
                     } 
@@ -181,9 +179,6 @@
     <body>
         <button onclick="signin()">Sign in</button>
         <button onclick="signout()">Sign out</button>
-        <br>
-        <p>Step 1: delete your existing Firebase Realtime database</p>
-        <a href="fbtest.json" target="_target">Step 2: replace JSON Firebase rules for database</a><br>
     
         <form>
             Tweet:<br>
