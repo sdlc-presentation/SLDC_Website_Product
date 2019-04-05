@@ -33,6 +33,8 @@
                 name = user.displayName;
                 imageUrl = user.photoURL;
                 email = user.email;
+                sDate = tweets[0].time;
+                console.log(sDate);
                     
                 // write user data to users
                 writeUserData(userId, name, email, imageUrl);
@@ -128,6 +130,8 @@
         
         // write tweets to firebase
         function tweet() {
+            var dateJoined = tweet[0].time;
+            console.log(dateJoined)
             
             var twitdoc = document.getElementById("twit");
             var twitimg = document.getElementById("imgTest");
