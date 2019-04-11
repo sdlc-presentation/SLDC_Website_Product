@@ -1,12 +1,20 @@
+
 <html>
 
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <style>
-        tr:hover {background-color: #f5f5f5;}
-        th, td {
-            border-bottom: 1px solid #ddd;
+        
+        table{
+            align-self: center;
+        }
+        th,td {
+            background-color: gainsboro;
+            padding: 20px;
+        }
+        body{
+            background-color: aliceblue;
         }
     
     </style>
@@ -33,7 +41,6 @@
                 name = user.displayName;
                 imageUrl = user.photoURL;
                 email = user.email;
-                
                     
                 // write user data to users
                 writeUserData(userId, name, email, imageUrl);
@@ -43,6 +50,7 @@
                 mydiv.innerHTML = name
                 myphotodiv = document.getElementById("myphoto");
                 myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
+
                 firebase.database().ref('/tweets').once('value').then(function(snapshot) {
                     var data = (snapshot.val());
                     if (data == null) {
@@ -65,6 +73,7 @@
         }); // end check auth state
         
         function encodeImageFileAsURL() {
+
             var filesSelected = document.getElementById("inputFileToLoad").files;
             if (filesSelected.length > 0) {
                 var fileToLoad = filesSelected[0];
@@ -93,7 +102,7 @@
         
         function updatetweets(data) {
             //var mylist = "<ul>";
-            var mytab = "<table>";
+            var mytab = "<table id = 'table'>";
             users = data[1]; // put on top, because changed data - not good coding change later
             data = data[0];
             
@@ -103,19 +112,16 @@
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<td><img src='" + data[u][t].img + "' width='300px' height='450px'></td>";
+                        mytab = mytab + "<td colspan='2''><center>" + "<img src='" + data[u][t].img + "' width='300px'></center></td>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='40px'></td>"
-                        mytab = mytab + "<td>" + "<b>" + data[u][t].tweet + "</b>" + "<br>" + time + "</td>";
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
+                        mytab = mytab + "<td><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
                     } else {
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='300px'></td>";
-                        mytab = mytab + "<tr>";
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='40px'></td>"
-                        mytab = mytab + "<td>" + "<b>" + data[u][t].tweet + "</b>" + "<br>" + time + "</td>";
-                        
+                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
+                        mytab = mytab + "<td><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
                         
                     } 
-                    mytab = mytab + "</td>";
+                    mytab = mytab + "</tr>";
                 }   
             }
             //mylist = mylist + "</ul>";
@@ -127,7 +133,7 @@
         
         // write tweets to firebase
         function tweet() {
-       
+            
             var twitdoc = document.getElementById("twit");
             var twitimg = document.getElementById("imgTest");
             var nameValue = twitdoc.value;
@@ -173,12 +179,16 @@
             });
         }
         
+
     
     </script>
 
     <body>
         <button onclick="signin()">Sign in</button>
         <button onclick="signout()">Sign out</button>
+        <br>
+        <br>
+        <h1>Twitter Clone </h1>
     
         <form>
             Tweet:<br>
@@ -189,7 +199,7 @@
         <br><input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
         <div id="imgTest" style="display:none;"></div>
         
-    <div id="mytweets"></div>
+    <center><div id="mytweets"></div></center>
     <div id="mydata"></div>
     <div id="myphoto"></div>
         
@@ -197,4 +207,8 @@
         
         
     </body>
+
+    
+
+    
 </html>
