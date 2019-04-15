@@ -6,15 +6,27 @@
 
     <style>
         
-        table{
+        
+        .tab {
             align-self: center;
         }
-        th,td {
-            background-color: gainsboro;
-            padding: 20px;
+        .space {
+        background-color: aliceblue;
+        padding: 2.5px;
         }
+        .content {
+        background-color: gainsboro;
+        padding: 20px;
+        }
+       
         body{
             background-color: aliceblue;
+        }
+        .avatar{
+            vertical-align: middle;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
         }
     
     </style>
@@ -49,7 +61,7 @@
                 mydiv = document.getElementById("mydata");
                 mydiv.innerHTML = name
                 myphotodiv = document.getElementById("myphoto");
-                myphotodiv.innerHTML = "<img src='" + imageUrl + "'/>";
+                myphotodiv.innerHTML = "<img src='" + imageUrl + "' class ='avatar'/>";
 
                 firebase.database().ref('/tweets').once('value').then(function(snapshot) {
                     var data = (snapshot.val());
@@ -101,8 +113,17 @@
         }
         
         function updatetweets(data) {
+            
+            var x = document.getElementById("textbox");
+            var y = document.getElementById("showbutton")
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            
             //var mylist = "<ul>";
-            var mytab = "<table id = 'table'>";
+            var mytab = "<table>";
             users = data[1]; // put on top, because changed data - not good coding change later
             data = data[0];
             
@@ -112,13 +133,17 @@
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<td colspan='2''><center>" + "<img src='" + data[u][t].img + "' width='300px'></center></td>";
+                        mytab = mytab + "<td class ='tab content'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar'></td>";
+                        mytab = mytab + "<td class ='tab content'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
                         mytab = mytab + "<tr>";
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
-                        mytab = mytab + "<td><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
+                        mytab = mytab + "<td colspan='2' class ='tab content'><center>" + "<img src='" + data[u][t].img + "' width='300px'></center></td>";
+                        mytab = mytab + "<tr>";
+                        mytab = mytab + "<td class ='tab space'>-</td>";
                     } else {
-                        mytab = mytab + "<td><img src='" + users[u].profile_picture + "' width='50px'></td>";
-                        mytab = mytab + "<td><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
+                        mytab = mytab + "<td class ='tab content'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar'></td>";
+                        mytab = mytab + "<td class ='tab content'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
+                        mytab = mytab + "<tr>";
+                        mytab = mytab + "<td class ='tab space'>-</td>";
                         
                     } 
                     mytab = mytab + "</tr>";
@@ -129,6 +154,18 @@
             var mytdiv = document.getElementById("mytweets");
             //mytdiv.innerHTML = mylist;
             mytdiv.innerHTML = mytab;
+        }
+        
+        function showTextbox() {
+            var x = document.getElementById("textbox");
+            var y = document.getElementById("showbutton");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                y.innerHTML = "Hide Textbox";
+            } else {
+                x.style.display = "none";
+                y.innerHTML = "New Tweet";
+            }
         }
         
         // write tweets to firebase
@@ -186,18 +223,21 @@
     <body>
         <button onclick="signin()">Sign in</button>
         <button onclick="signout()">Sign out</button>
+        <button onclick="showTextbox()" id="showbutton">New Tweet</button>
         <br>
         <br>
         <h1>Twitter Clone </h1>
-    
+        <div id ="textbox">
         <form>
             Tweet:<br>
             <textarea id="twit" type="text" name="thetweet" cols="100" rows="4"></textarea>
         </form> 
-        <button type="button" onclick="tweet()">Submit</button>
+            <button type="button" onclick="tweet()">Submit</button>
     
-        <br><input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
-        <div id="imgTest" style="display:none;"></div>
+            <br><input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+            <div id="imgTest" style="display:none;"></div>
+        
+        </div>
         
     <center><div id="mytweets"></div></center>
     <div id="mydata"></div>
