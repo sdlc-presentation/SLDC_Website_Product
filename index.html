@@ -1,4 +1,5 @@
 
+
 <html>
 
     <script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
@@ -11,18 +12,21 @@
             align-self: center;
         }
         .space {
-        background-color: deepskyblue;
+        background-color: white;
         padding: 2.5px;
         }
         .content {
-        background-color: gainsboro;
+        background-color: deepskyblue;
         padding: 20px;
+        color: white;
         }
        
         body,html{
-            background-color: deepskyblue;
+            background-color: white;
             height: 100%;
             margin: 0;
+            color: white;
+            padding: 6px;
         }
         
         .avatar{
@@ -31,20 +35,24 @@
             border-color: whitesmoke;
         }
         .big {
-            width: 250px;
-            height: 250px;
+            width: 50%;
+            height: 40%px;
         }
         .small {
             width: 50px;
             height: 50px;
         }
         .hero-image {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("header.jpg");
+            background-color: deepskyblue;
             height: 50%;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
+            border-style: solid;
+            border-color: black;
+            border-image-width: 5px;
+            box-shadow: 10px;
         }
         .hero-text {
             text-align: center;
@@ -63,6 +71,41 @@
         .modal-header{
             background-color: deepskyblue;
             color: white;
+        }
+        .left{
+            
+        }
+        .sidenav{
+            background-color: deepskyblue;
+            width: 22%;
+            height: 49%;
+            position: fixed;
+            border-style: solid;
+            border-color: black;
+            border-image-width: 5px;
+            top: 11px;
+            padding: 6px;
+        }
+        .bottombar{
+            border-bottom-style: solid;
+            border-bottom-color: white;
+        }
+        #myBtn {
+          display: none; /* Hidden by default */
+          position: fixed; /* Fixed/sticky position */
+          bottom: 20px; /* Place the button at the bottom of the page */
+          right: 30px; /* Place the button 30px from the right */
+          z-index: 99; /* Make sure it does not overlap */
+        }
+
+        #myBtn:hover {
+          background-color:white; /* Add a dark-grey background on hover */
+          color: deepskyblue;
+        }
+        
+        #newtweet:hover {
+          background-color:white; /* Add a dark-grey background on hover */
+          color: deepskyblue;
         }
 
     
@@ -96,7 +139,7 @@
                 
                 // write data to document
                 mydiv = document.getElementById("mydata");
-                mydiv.innerHTML = "Username: " + name + "  Email: " + email;
+                mydiv.innerHTML = "<h1>" + name + "</h1><br><h3>" + email + "</h3>";
                 myphotodiv = document.getElementById("myphoto");
                 myphotodiv.innerHTML = "<img src='" + imageUrl + "' class ='avatar big'/>";
 
@@ -162,15 +205,15 @@
                     var date = new Date(data[u][t].time);
                     var time = date.toString();
                     if (data[u][t].img != "") {
-                        mytab = mytab + "<td class ='tab content'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar small'></td>";
-                        mytab = mytab + "<td class ='tab content'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
+                        mytab = mytab + "<td class ='tab content bottombar'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar small'></td>";
+                        mytab = mytab + "<td class ='tab content bottombar'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
                         mytab = mytab + "<tr>";
                         mytab = mytab + "<td colspan='2' class ='tab content'><center>" + "<img src='" + data[u][t].img + "' width='300px'></center></td>";
                         mytab = mytab + "<tr>";
                         mytab = mytab + "<td class ='tab space'>-</td>";
                     } else {
-                        mytab = mytab + "<td class ='tab content'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar small'></td>";
-                        mytab = mytab + "<td class ='tab content'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
+                        mytab = mytab + "<td class ='tab content bottombar'><img src='" + users[u].profile_picture + "' width='50px' class ='avatar small'></td>";
+                        mytab = mytab + "<td class ='tab content bottombar'><b>" + data[u][t].tweet + "</b><br>"+ time + "</td>";
                         mytab = mytab + "<tr>";
                         mytab = mytab + "<td class ='tab space'>-</td>";
                         
@@ -234,6 +277,22 @@
             });
         }
         
+        window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+              } else {
+                document.getElementById("myBtn").style.display = "none";
+              }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+              document.body.scrollTop = 0; // For Safari
+              document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }
+        
 
     
     </script>
@@ -247,21 +306,22 @@
           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         </head>
         <div class="hero-image">
-            <button onclick="signin()">Sign in</button>
-            <button onclick="signout()">Sign out</button>
-                <br><br><br><br><br>
-                <div id="myphoto"></div>
-                <br>
-                <div id="mydata" class="myid"></div>
+            <button onclick="signin()" class="btn btn-info btn-lg">Sign in</button>
+            <button onclick="signout()" class="btn btn-info btn-lg">Sign out</button>
             <div class="hero-text">
-                <h1 style="font-size:50px">Stuff</h1>
+                <h1 style="font-size:60px">Reach Out!</h1>
             </div>
         </div> 
         <br><br>
         
+        <div id="sidenav" class="sidenav">
+            <div id="myphoto"></div><br>
+            <div id="mydata" class="myid"></div>
+        </div>
+        
         <div class="container">
           <!-- Trigger the modal with a button -->
-          <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">New Tweet</button>
+          <center><button type="button" id="newtweet" class="btn btn-info btn-lg " data-toggle="modal" data-target="#myModal">New Tweet</button></center>
 
           <!-- Modal -->
           <div class="modal fade" id="myModal" role="dialog">
@@ -289,7 +349,9 @@
           </div>
 
         </div>
-
+        
+        <br>
+        <button onclick="topFunction()" id="myBtn" class = "btn btn-info btn-lg"title="Go to top">Top</button>
         
     <center><div id="mytweets"></div></center>
         
